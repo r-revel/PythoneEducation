@@ -1,0 +1,4 @@
+.vscode
+*.py
+__pycache__
+mifi_base
