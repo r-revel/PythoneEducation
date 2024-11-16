@@ -1,4 +1,6 @@
 .vscode
 *.py
+.pdf
 __pycache__
 mifi_base
+Task_4/*.csv
