@@ -3,4 +3,5 @@
 .pdf
 __pycache__
 mifi_base
-Task_4/*.csv
+DA_Task_1/*.csv
+DA_Task_2/data/*.csv
