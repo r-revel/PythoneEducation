@@ -1,6 +1,6 @@
 .vscode
 *.py
-.pdf
+*.pdf
 __pycache__
 mifi_base
 DA_Task_1/*.csv
