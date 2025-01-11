@@ -7,3 +7,4 @@ __pycache__
 mifi_base
 DA_Task_1/*.csv
 DA_Task_2/data/*.csv
+Task_END/*.txt
