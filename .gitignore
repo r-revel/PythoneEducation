@@ -13,3 +13,4 @@ E_ML/content
 Task_END/*.txt
 **/data/*.csv
 **/data/*.tsv
+**/data/*.xlsx
