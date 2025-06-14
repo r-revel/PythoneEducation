@@ -9,6 +9,7 @@ DA_Task_1/*.csv
 DA_Task_2/data/*.csv
 MO_Task_5/clustering-physical-activity-data/*.csv
 I_DL/dl2025miptml
+ADL_Task_1/dl-captcha-new
 E_ML/content
 Task_END/*.txt
 **/data/*.csv
