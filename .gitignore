@@ -1,6 +1,5 @@
 .vscode
 *.py
-*.pdf
 __pycache__
 .venv
 .venvg
@@ -8,6 +7,8 @@ mifi_base
 DA_Task_1/*.csv
 DA_Task_2/data/*.csv
 MO_Task_5/clustering-physical-activity-data/*.csv
+MO_END/Run200_Wave_0_1.txt
+MO_END/clustering_results.csv
 I_DL/dl2025miptml
 ADL_Task_1/dl-captcha-new
 E_ML/content
@@ -15,3 +16,4 @@ Task_END/*.txt
 **/data/*.csv
 **/data/*.tsv
 **/data/*.xlsx
+Pythone/CW-ML/dl.ipynb
