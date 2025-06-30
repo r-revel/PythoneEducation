@@ -1,0 +1,35 @@
+{'Model': 'XGBoost', 'RMSE': 453.6970170345226, 'R2': 0.38289524210601866, 'MAE': 239.59144403129596, 'Best Params': {'subsample': 0.9, 'n_estimators': 200, 'max_depth': 5, 'learning_rate': 0.01, 'colsample_bytree': 1.0}, 'Time (sec)': 36.1}
+{'Model': 'Random Forest', 'RMSE': 436.11637588125706, 'R2': 0.4297939302469558, 'MAE': 232.8684192239013, 'Best Params': {'n_estimators': 100, 'min_samples_split': 10, 'min_samples_leaf': 2, 'max_depth': 10, 'bootstrap': False}, 'Time (sec)': 37.04}
+{'Model': 'Neural Network', 'RMSE': 444.35585600050246, 'R2': 0.40804476859885574, 'MAE': 226.32868484640161, 'Best Params': {'learning_rate_init': 0.001, 'hidden_layer_sizes': (128, 64), 'batch_size': 32, 'alpha': 0.001}, 'Time (sec)': 13.93}
+
+
+{'Model': 'XGBoost', 'RMSE': 464.625965390857, 'R2': 0.5836103432048649, 'MAE': 293.9290645038305, 'Best Params': {'subsample': 0.8, 'n_estimators': 300, 'max_depth': 7, 'learning_rate': 0.01, 'colsample_bytree': 0.8}, 'Time (sec)': 38.5}
+{'Model': 'Random Forest', 'RMSE': 451.4122933858691, 'R2': 0.6069572911500704, 'MAE': 278.1825514417777, 'Best Params': {'n_estimators': 100, 'min_samples_split': 5, 'min_samples_leaf': 2, 'max_depth': 20, 'bootstrap': False}, 'Time (sec)': 36.4}
+{'Model': 'Neural Network', 'RMSE': 500.8051765036426, 'R2': 0.5162392838021651, 'MAE': 315.15490719920564, 'Best Params': {'learning_rate_init': 0.001, 'hidden_layer_sizes': (64, 32), 'batch_size': 128, 'alpha': 0.0001}, 'Time (sec)': 16.36}
+
+
+{'Model': 'XGBoost', 'RMSE': 1354.477735415758, 'R2': 0.0866588120110402, 'MAE': 185.27528527951281, 'Best Params': {'subsample': 1.0, 'n_estimators': 300, 'max_depth': 5, 'learning_rate': 0.2, 'colsample_bytree': 0.9}, 'Time (sec)': 48.16}
+{'Model': 'Random Forest', 'RMSE': 1357.3601204029133, 'R2': 0.08276741977672442, 'MAE': 189.53613747755819, 'Best Params': {'n_estimators': 100, 'min_samples_split': 10, 'min_samples_leaf': 4, 'max_depth': 20, 'bootstrap': False}, 'Time (sec)': 42.04}
+{'Model': 'Neural Network', 'RMSE': 1421.3971370178479, 'R2': -0.005819785806299382, 'MAE': 184.91516004662247, 'Best Params': {'learning_rate_init': 0.001, 'hidden_layer_sizes': (64, 32), 'batch_size': 32, 'alpha': 0.0001}, 'Time (sec)': 5.56}
+
+
+
+
+{'Model': 'Random Forest', 'Accuracy': 0.7164179104477612, 'Precision': 0.6972477064220184, 'Recall': 0.76, 'F1': 0.7272727272727273, 'ROC AUC': 0.8329702970297029, 'Best Params': {'n_estimators': 200, 'min_samples_split': 2, 'min_samples_leaf': 4, 'max_depth': 10, 'bootstrap': True}, 'Time (sec)': 22.05}
+{'Model': 'K-Neighbors (GPU)', 'Accuracy': 0.7213930348258707, 'Precision': 0.6864406779661016, 'Recall': 0.81, 'F1': 0.7431192660550459, 'ROC AUC': 0.8270297029702971, 'Best Params': {'weights': 'distance', 'n_neighbors': 7, 'algorithm': 'auto'}, 'Time (sec)': 10.26}
+{'Model': 'XGBoost', 'Accuracy': 0.6965174129353234, 'Precision': 0.6666666666666666, 'Recall': 0.78, 'F1': 0.7188940092165899, 'ROC AUC': 0.8147029702970298, 'Best Params': {'subsample': 0.8, 'n_estimators': 100, 'max_depth': 5, 'learning_rate': 0.01, 'colsample_bytree': 0.8}, 'Time (sec)': 31.1}
+
+
+{'Model': 'XGBoost', 'Accuracy': 0.6666666666666666, 'Precision': 0.6434782608695652, 'Recall': 0.74, 'F1': 0.6883720930232559, 'ROC AUC': 0.7604455445544555, 'Best Params': {'subsample': 0.8, 'n_estimators': 100, 'max_depth': 5, 'learning_rate': 0.01, 'colsample_bytree': 0.8}, 'Time (sec)': 34.24}
+{'Model': 'K-Neighbors (GPU)', 'Accuracy': 0.6666666666666666, 'Precision': 0.6513761467889908, 'Recall': 0.71, 'F1': 0.6794258373205742, 'ROC AUC': 0.7467821782178219, 'Best Params': {'weights': 'distance', 'n_neighbors': 7, 'algorithm': 'auto'}, 'Time (sec)': 10.25}
+{'Model': 'Random Forest', 'Accuracy': 0.6965174129353234, 'Precision': 0.6638655462184874, 'Recall': 0.79, 'F1': 0.7214611872146118, 'ROC AUC': 0.7782673267326733, 'Best Params': {'n_estimators': 200, 'min_samples_split': 2, 'min_samples_leaf': 4, 'max_depth': 10, 'bootstrap': True}, 'Time (sec)': 22.38}
+
+
+{'Model': 'XGBoost', 'Accuracy': 0.6666666666666666, 'Precision': 0.6813186813186813, 'Recall': 0.62, 'F1': 0.6492146596858639, 'ROC AUC': 0.6943069306930693, 'Best Params': {'subsample': 0.8, 'n_estimators': 300, 'max_depth': 7, 'learning_rate': 0.01, 'colsample_bytree': 0.8}, 'Time (sec)': 36.59}
+{'Model': 'K-Neighbors (GPU)', 'Accuracy': 0.6368159203980099, 'Precision': 0.6310679611650486, 'Recall': 0.65, 'F1': 0.6403940886699507, 'ROC AUC': 0.7132673267326732, 'Best Params': {'weights': 'uniform', 'n_neighbors': 5, 'algorithm': 'auto'}, 'Time (sec)': 13.28}
+{'Model': 'Random Forest', 'Accuracy': 0.6467661691542289, 'Precision': 0.6666666666666666, 'Recall': 0.58, 'F1': 0.6203208556149733, 'ROC AUC': 0.680049504950495, 'Best Params': {'n_estimators': 100, 'min_samples_split': 10, 'min_samples_leaf': 2, 'max_depth': 10, 'bootstrap': False}, 'Time (sec)': 18.73}
+
+
+{'Model': 'XGBoost', 'Accuracy': 0.7412935323383084, 'Precision': 0.7, 'Recall': 0.4861111111111111, 'F1': 0.5737704918032787, 'ROC AUC': 0.7631890611541774, 'Best Params': {'subsample': 0.9, 'n_estimators': 200, 'max_depth': 5, 'learning_rate': 0.01, 'colsample_bytree': 1.0}, 'Time (sec)': 34.62}
+{'Model': 'K-Neighbors (GPU)', 'Accuracy': 0.6567164179104478, 'Precision': 0.5223880597014925, 'Recall': 0.4861111111111111, 'F1': 0.5035971223021583, 'ROC AUC': 0.7242678725236864, 'Best Params': {'weights': 'distance', 'n_neighbors': 7, 'algorithm': 'auto'}, 'Time (sec)': 10.66}
+{'Model': 'Random Forest', 'Accuracy': 0.7164179104477612, 'Precision': 0.6229508196721312, 'Recall': 0.5277777777777778, 'F1': 0.5714285714285714, 'ROC AUC': 0.7502691645133506, 'Best Params': {'n_estimators': 300, 'min_samples_split': 2, 'min_samples_leaf': 4, 'max_depth': 10, 'bootstrap': False}, 'Time (sec)': 22.35}
