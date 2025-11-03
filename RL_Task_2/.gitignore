@@ -1,3 +1,4 @@
 !analysis.py
 !utils.py
 !atari_wrappers.py
+!test_td_loss/compute_td_loss.py
