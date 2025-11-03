@@ -17,3 +17,5 @@ Task_END/*.txt
 **/data/*.tsv
 **/data/*.xlsx
 Pythone/CW-ML/dl.ipynb
+RS/*.csv
+RL_Task_3/expert_cheetah_dataset.h5
