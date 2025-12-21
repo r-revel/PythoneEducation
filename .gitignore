@@ -19,3 +19,8 @@ Task_END/*.txt
 Pythone/CW-ML/dl.ipynb
 RS/*.csv
 RL_Task_3/expert_cheetah_dataset.h5
+GAN_Task_1/data
+GAN_Task_1/mnist_cvae_fake_2
+GAN_Task_1/mnist_vae_fake
+GAN_Task_1/mnist_vae_real
+GAN_Task_1/mnist_сvae_real_2
