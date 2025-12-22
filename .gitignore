@@ -24,3 +24,7 @@ GAN_Task_1/mnist_cvae_fake_2
 GAN_Task_1/mnist_vae_fake
 GAN_Task_1/mnist_vae_real
 GAN_Task_1/mnist_сvae_real_2
+GAN_Task_2/content
+GAN_Task_2/generated_samples
+GAN_Task_2/output
+GAN_Task_2/real_samples
