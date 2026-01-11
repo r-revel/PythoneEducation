@@ -29,3 +29,5 @@ GAN_Task_2/generated_samples
 GAN_Task_2/output
 GAN_Task_2/real_samples
 GAN_END/datasets
+RL_END/logs/monitor.csv
+RL_END/models
