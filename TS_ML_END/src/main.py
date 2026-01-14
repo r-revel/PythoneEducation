@@ -17,7 +17,6 @@ async def run_bot(token: str):
 
     router.route("/", stock_controller.menu)
     router.route("/forecast", stock_controller.start_forecast)
-    router.route("/forecast/amount", stock_controller.handle_ticker_input)
     router.route("/forecast/process", stock_controller.process_forecast)
     router.route("/stats", stock_controller.show_stats)
     router.route("/help", stock_controller.show_help)

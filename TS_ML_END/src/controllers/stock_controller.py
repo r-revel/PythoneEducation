@@ -10,6 +10,7 @@ from services.analytics_service import AnalyticsService
 from services.plot_service import PlotService
 from services.log_service import LogService
 from config import Config
+import numpy as np
 
 
 class StockController(BaseController):
@@ -54,32 +55,35 @@ class StockController(BaseController):
                 field_type='text',
                 title='Введите тикер компании (например: AAPL, MSFT, GOOGL):',
                 placeholder='AAPL'
+            ),
+            FormField(
+                name='amount',
+                field_type='text',
+                title='Введите сумму для условной инвестиции ($):',
+                placeholder='1000'
             )
         ]
-
-        return partial(
-            self.ctx.driver.render_message,
-            content=MViewItem(
-                title="Ввод тикера",
-                text="Пожалуйста, введите тикер компании, которую хотите проанализировать.",
-                form_fields=form_fields,
-                form_complete='/forecast/amount'
-            )
-
+        form_item = MViewItem(
+            title="Ввод тикера",
+            text="Пожалуйста, введите тикер компании, которую хотите проанализировать.",
+            form_fields=form_fields,
+            form_complete='/forecast/process'
         )
 
-    async def handle_ticker_input(self, update):
-        """Обработка ввода тикера"""
+        self.ctx.driver.getRouter().set_current_item(form_item)
+        return partial(
+            self.ctx.driver.render_message,
+            content=form_item
+        )
+
+    async def process_forecast(self, update, request):
+        """Обработка запроса и построение прогноза"""
         user_id = update.effective_user.id
 
-        if user_id not in self.user_sessions:
-            return await self.show_error(update, "Сессия не найдена. Начните с /start")
-
-        # Получаем введенный тикер
-        ticker = update.message.text.strip().upper()
-
-        # Валидация тикера
         try:
+            # Получаем введенный тикер
+            ticker = request.get("ticker", "")
+
             # Пробуем загрузить данные для проверки
             self.data_service.fetch_stock_data(ticker)
 
@@ -87,33 +91,8 @@ class StockController(BaseController):
             self.user_sessions[user_id]['data']['ticker'] = ticker
             self.user_sessions[user_id]['step'] = 'amount'
 
-            # Запрашиваем сумму инвестиции
-            form_fields = [
-                FormField(
-                    name='amount',
-                    field_type='text',
-                    title='Введите сумму для условной инвестиции ($):',
-                    placeholder='1000'
-                )
-            ]
-
-            return partial(
-                self.ctx.driver.render_message,
-                title="Ввод суммы инвестиции",
-                text=f"Тикер {ticker} принят. Теперь введите сумму для анализа.",
-                fields=form_fields,
-                submit_link='/forecast/process'
-            )
-
         except Exception as e:
             return await self.show_error(update, f"Ошибка: {str(e)}\nПожалуйста, введите корректный тикер.")
-
-    async def process_forecast(self, update):
-        """Обработка запроса и построение прогноза"""
-        user_id = update.effective_user.id
-
-        if user_id not in self.user_sessions:
-            return await self.show_error(update, "Сессия не найдена")
 
         try:
             start_time = time.time()
@@ -121,13 +100,16 @@ class StockController(BaseController):
 
             # Получаем данные из сессии
             ticker = session['data']['ticker']
-            amount = float(update.message.text.strip())
+            amount = request.get("amount", "")
 
             # Отправляем сообщение о начале обработки
-            await self.show_message(
-                update,
-                title="⏳ Обработка",
-                text="Загружаю данные и строю прогноз. Это может занять несколько минут..."
+
+            await self.ctx.driver.render_message(
+                content=MViewItem(
+                    title="⏳ Обработка",
+                    text="Загружаю данные и строю прогноз. Это может занять несколько минут..."
+                ),
+                update=update
             )
 
             # 1. Загрузка и подготовка данных
@@ -179,14 +161,13 @@ class StockController(BaseController):
                 MViewOption(title='📊 Главное меню', link='/'),
             ]
 
-            # Отправляем график
-            with open(plot_path, 'rb') as photo:
-                await update.message.reply_photo(
-                    photo=photo,
-                    caption=f"📈 Прогноз для {ticker}\nЛучшая модель: {best_model.get_name()}"
-                )
+            # # Отправляем график
+            # with open(plot_path, 'rb') as photo:
+            #     await update.message.reply_photo(
+            #         photo=photo,
+            #         caption=f"📈 Прогноз для {ticker}\nЛучшая модель: {best_model.get_name()}"
+            #     )
 
-            # Отправляем текстовую сводку
             return partial(
                 self.ctx.driver.render_message,
                 content=MViewItem(
@@ -243,23 +224,9 @@ class StockController(BaseController):
         """
         return partial(
             self.show_message,
-            update=update,
             title="ℹ️ Помощь",
             text=help_text,
             options=[MViewOption(title="Начать анализ", link="/forecast")]
-        )
-
-    async def show_message(self, update, title: str, text: str, options=None):
-        """Утилита для показа сообщения"""
-        if options is None:
-            options = [MViewOption(title="Назад", link="/")]
-
-        return self.ctx.driver.render_message(
-            content=MViewItem(
-                title=title,
-                text=text,
-                option=options
-            )
         )
 
     async def show_error(self, update, error_message: str):

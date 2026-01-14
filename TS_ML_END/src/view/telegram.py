@@ -16,14 +16,13 @@ from router.router import Router
 from telegram.error import BadRequest
 
 class TelegramClient:
-    def __init__(self, token: str, payment_provider_token: str = '390540012:LIVE:81801'):
+    def __init__(self, token: str):
         self.token = token
         self.application: Optional[Application] = None
         self._is_running = False
         self.router: Optional[Router] = None
         # Добавляем обработчик состояния (по умолчанию None)
         self.state_handler: Optional[Callable] = None
-        self.payment_provider_token = payment_provider_token
 
     def set_state_handler(self, handler: Callable):
         """Устанавливает функцию-обработчик состояния, которая будет вызываться перед отправкой сообщений."""
@@ -38,9 +37,7 @@ class TelegramClient:
             CommandHandler("start", self._handle_start),
             MessageHandler(filters.TEXT & ~filters.COMMAND,
                            self._handle_message),
-            CallbackQueryHandler(self._handle_callback),
-            PreCheckoutQueryHandler(self._handle_pre_checkout),
-            MessageHandler(filters.SUCCESSFUL_PAYMENT, self._handle_successful_payment),
+            CallbackQueryHandler(self._handle_callback)
         ]
 
         for handler in handlers:
@@ -448,17 +445,3 @@ class TelegramClient:
                 current_item.form_fields and
                 hasattr(current_item, 'current_form_step') and
                 current_item.current_form_step is not None)
-
-    async def _handle_pre_checkout(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        """Обработка предварительного запроса на оплату"""
-        query = update.pre_checkout_query
-        # Здесь можно добавить логику проверки заказа
-        await query.answer(ok=True)
-
-    async def _handle_successful_payment(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        """Обработка успешного платежа"""
-        successful_payment = update.message.successful_payment
-
-        # Если у вас есть router, можно перенаправить на нужный маршрут
-        if self.getRouter():
-            await self.getRouter().handle("/payment_success", update=update, payment_data=successful_payment)

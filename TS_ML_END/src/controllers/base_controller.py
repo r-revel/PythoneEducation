@@ -10,8 +10,6 @@ class BaseController:
         self.chat_id = None
         self.user_id = None
         self.ctx.driver.set_state_handler(self._state_handler)
-        if not self.ctx.time_slots:
-            self.ctx.time_slots = self.ctx._init_time_slots()
 
     async def show_message(self, title: str, text: str, options=None, **kwargs):
         if options is None:
