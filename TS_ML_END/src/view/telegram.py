@@ -170,6 +170,7 @@ class TelegramClient:
 
     async def _render_photo(
         self,
+        chat_id: int,
         photo: Union[str, bytes, BytesIO],
         caption: Optional[str] = None,
         message_id: Optional[int] = None,
@@ -185,7 +186,7 @@ class TelegramClient:
             try:
                 # Пытаемся обновить существующее сообщение с фото
                 msg = await self.application.bot.edit_message_media(
-                    chat_id=self.chat_id,
+                    chat_id=chat_id,
                     message_id=message_id,
                     media=media,
                     **kwargs
@@ -197,7 +198,7 @@ class TelegramClient:
 
         # Отправляем новое фото
         msg = await self.application.bot.send_photo(
-            chat_id=self.chat_id,
+            chat_id=chat_id,
             photo=photo,
             caption=caption,
             **kwargs
@@ -261,6 +262,7 @@ class TelegramClient:
 
         if image_url:
             return await self._render_photo(
+                chat_id=chat_id,
                 photo=image_url,
                 caption=text,
                 message_id=message_id,
@@ -320,22 +322,13 @@ class TelegramClient:
                 reply_markup = None
             text += "\n\nПожалуйста, введите текст:"
 
-        if hasattr(item, 'image_url') and item.image_url:
-            return await self._render_photo(
-                photo=item.image_url,
-                caption=text,
-                message_id=message_id,
-                reply_markup=reply_markup,
-                parse_mode='HTML'
-            )
-        else:
-            return await self._render_text(
-                text=text,
-                message_id=message_id,
-                chat_id=chat_id,
-                reply_markup=reply_markup,
-                parse_mode='HTML'
-            )
+        return await self._render_text(
+            text=text,
+            message_id=message_id,
+            chat_id=chat_id,
+            reply_markup=reply_markup,
+            parse_mode='HTML'
+        )
 
     async def _handle_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         if self.state_handler is not None:

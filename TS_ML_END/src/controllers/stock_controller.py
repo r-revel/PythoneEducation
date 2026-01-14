@@ -166,7 +166,7 @@ class StockController(BaseController):
                 return partial(
                     self.ctx.driver.render_message,
                     content=MViewItem(
-                        title="📈 Прогноз для {ticker}\nЛучшая модель: {best_model.get_name()}",
+                        title=f"📈 Прогноз для {ticker}\nЛучшая модель: {best_model.get_name()}",
                         text=summary,
                         option=options
                     ),
