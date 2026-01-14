@@ -21,24 +21,30 @@ class RandomForestModel(BaseModel):
         return self.model.predict(X)
 
     def forecast(self, last_data, steps: int) -> np.ndarray:
-        """Рекурсивный прогноз для Random Forest"""
         predictions = []
         current_features = last_data.copy()
 
         for _ in range(steps):
+            if not hasattr(self.model, 'feature_names_in_'):
+                train_features = self.last_features.columns
+            else:
+                train_features = self.model.feature_names_in_
+
+            current_features = current_features.reindex(columns=train_features)
+
             pred = self.model.predict(current_features)[0]
             predictions.append(pred)
 
-            # Обновляем признаки для следующего шага
-            # Сдвигаем лаги
-            for lag in sorted([1, 2, 3, 5, 7, 14], reverse=True):
-                if f'lag_{lag}' in current_features.columns:
-                    if lag == 1:
-                        current_features[f'lag_{lag}'] = pred
-                    else:
-                        current_features[f'lag_{lag}'] = current_features[f'lag_{lag-1}']
+            lag_cols = [col for col in current_features.columns
+                        if col.startswith('lag_')]
 
-            # Пересчитываем скользящие средние (упрощенно)
-            # В реальном проекте нужна более сложная логика
+            for lag in sorted([int(col.split('_')[1]) for col in lag_cols],
+                              reverse=True):
+                if lag == 1:
+                    current_features[f'lag_{lag}'] = pred
+                else:
+                    prev_lag = f'lag_{lag-1}'
+                    if prev_lag in current_features.columns:
+                        current_features[f'lag_{lag}'] = current_features[prev_lag]
 
         return np.array(predictions)
