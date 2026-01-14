@@ -3,7 +3,8 @@ import argparse
 from router.router import Router
 from view.telegram import TelegramClient
 from controller.app_context import AppContext
-from controller.public_controller import PublicController
+from Pythone.TS_ML_END.src.controller.stock_controller import PublicController
+
 
 async def run_bot(token: str):
     """Запускает бота с определёнными правами."""
@@ -14,11 +15,8 @@ async def run_bot(token: str):
 
     router = Router()
 
-  
     router.route("/", public.menu)
-    router.route("/price", public.menu)
-
-
+    router.route("/price", public.price)
 
     await tg_client.init(router=router)
 
@@ -29,7 +27,6 @@ async def run_bot(token: str):
         await tg_client.stop()
 
 
-
 async def main():
     parser = argparse.ArgumentParser(description="Запуск Telegram бота с разными правами.")
     parser.add_argument("--token", type=str, required=False, help="Токен бота от @BotFather")
@@ -37,6 +34,6 @@ async def main():
     args = parser.parse_args()
 
     await run_bot(args.token)
-       
+
 if __name__ == "__main__":
     asyncio.run(main())
