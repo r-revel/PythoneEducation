@@ -1,0 +1,10 @@
+python-telegram-bot>=20.7
+yfinance>=0.2.38
+pandas>=2.2.0
+numpy>=1.26.4
+scikit-learn>=1.4.2
+statsmodels>=0.14.2
+prophet>=1.1.5
+torch>=2.2.0
+matplotlib>=3.8.2
+python-dotenv>=1.0.0

@@ -2,8 +2,8 @@ import asyncio
 import argparse
 from router.router import Router
 from view.telegram import TelegramClient
-from controller.app_context import AppContext
-from Pythone.TS_ML_END.src.controller.stock_controller import PublicController
+from controllers.app_context import AppContext
+from controllers.stock_controller import StockController
 
 
 async def run_bot(token: str):
@@ -11,12 +11,16 @@ async def run_bot(token: str):
     tg_client = TelegramClient(token)
 
     ctx = AppContext(tg_client)
-    public = PublicController(ctx)
+    stock_controller = StockController(ctx)
 
     router = Router()
 
-    router.route("/", public.menu)
-    router.route("/price", public.price)
+    router.route("/", stock_controller.menu)
+    router.route("/forecast", stock_controller.start_forecast)
+    router.route("/forecast/amount", stock_controller.handle_ticker_input)
+    router.route("/forecast/process", stock_controller.process_forecast)
+    router.route("/stats", stock_controller.show_stats)
+    router.route("/help", stock_controller.show_help)
 
     await tg_client.init(router=router)
 

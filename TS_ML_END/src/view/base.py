@@ -26,8 +26,20 @@ class MViewItem:
     image_url: Optional[str] = None  # URL изображения
     image_caption: Optional[str] = None  # Подпись к изображению=
     option: Optional[List[MViewOption]] = None
+    form_fields: Optional[List[FormField]] = None
+    form_complete: Optional[str] = None
     message_id: Optional[int] = None
     current_form_step: Optional[int] = None  # Текущий шаг заполнения формы
+
+    def getFormField(self, step: int | None):
+        if step is None:
+            raise Exception('Ошибка: не пришел шаг')
+        if self.form_fields is None:
+            raise Exception('Ошибка: не обнаружены поля формы')
+        return self.form_fields[step]
+
+    def getLast(self) -> FormField:
+        return self.getFormField(len(self.form_fields or []) - 1)
 
 
 @dataclass
