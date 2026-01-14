@@ -53,13 +53,13 @@ class StockController(BaseController):
             FormField(
                 name='ticker',
                 field_type='text',
-                title='Введите тикер компании (например: AAPL, MSFT, GOOGL):',
-                placeholder='AAPL'
+                title='Введите тикер компании',
+                placeholder='(например: AAPL, MSFT, GOOGL)'
             ),
             FormField(
                 name='amount',
                 field_type='text',
-                title='Введите сумму для условной инвестиции ($):',
+                title='Введите сумму для условной инвестиции ($)',
                 placeholder='1000'
             )
         ]
@@ -174,13 +174,14 @@ class StockController(BaseController):
                     title="✅ Прогноз готов!",
                     text=summary,
                     option=options
-                )
+                ),
+                update=update
             )
 
         except ValueError as e:
-            return await self.show_error(update, f"Ошибка ввода: {str(e)}")
+            return partial(self.show_error, f"Ошибка ввода: {str(e)}")
         except Exception as e:
-            return await self.show_error(update, f"Произошла ошибка: {str(e)}")
+            return partial(self.show_error, f"Произошла ошибка: {str(e)}")
         finally:
             # Очищаем сессию
             if user_id in self.user_sessions:
