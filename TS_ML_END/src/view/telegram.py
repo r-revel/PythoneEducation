@@ -1,3 +1,4 @@
+from io import BytesIO
 from typing import Callable, Optional, Union
 from telegram import InputMediaPhoto, Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import (
@@ -14,6 +15,7 @@ import inspect
 from view.base import MViewItem
 from router.router import Router
 from telegram.error import BadRequest
+
 
 class TelegramClient:
     def __init__(self, token: str):
@@ -97,6 +99,7 @@ class TelegramClient:
 
         chat_id = getattr(
             getattr(update, "effective_message", None), "chat_id", None)
+            
 
         if chat_id is None:
             raise ValueError("Chat ID not provided")
@@ -167,19 +170,24 @@ class TelegramClient:
 
     async def _render_photo(
         self,
-        photo: str,
+        photo: Union[str, bytes, BytesIO],
         caption: Optional[str] = None,
         message_id: Optional[int] = None,
         **kwargs
     ) -> int:
         """Обработка сообщения с фото"""
+
+        if isinstance(photo, (bytes, BytesIO)):
+            media = InputMediaPhoto(media=photo, caption=caption)
+        else:
+            media = InputMediaPhoto(media=photo, caption=caption)
         if message_id:
             try:
                 # Пытаемся обновить существующее сообщение с фото
                 msg = await self.application.bot.edit_message_media(
                     chat_id=self.chat_id,
                     message_id=message_id,
-                    media=InputMediaPhoto(photo, caption=caption),
+                    media=media,
                     **kwargs
                 )
                 return msg.message_id
@@ -249,9 +257,11 @@ class TelegramClient:
         text = f"<b>{item.title}</b>\n{item.text}"
         reply_markup = self._create_item_keyboard(item)
 
-        if hasattr(item, 'image_url') and item.image_url:
+        image_url = kwargs.get('image_url') or getattr(item, 'image_url', None)
+
+        if image_url:
             return await self._render_photo(
-                photo=item.image_url,
+                photo=image_url,
                 caption=text,
                 message_id=message_id,
                 reply_markup=reply_markup,

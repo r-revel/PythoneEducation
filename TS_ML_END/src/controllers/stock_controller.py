@@ -100,7 +100,7 @@ class StockController(BaseController):
 
             # Получаем данные из сессии
             ticker = session['data']['ticker']
-            amount = request.get("amount", "")
+            amount = int(request.get("amount", ""))
 
             # Отправляем сообщение о начале обработки
 
@@ -161,22 +161,17 @@ class StockController(BaseController):
                 MViewOption(title='📊 Главное меню', link='/'),
             ]
 
-            # # Отправляем график
-            # with open(plot_path, 'rb') as photo:
-            #     await update.message.reply_photo(
-            #         photo=photo,
-            #         caption=f"📈 Прогноз для {ticker}\nЛучшая модель: {best_model.get_name()}"
-            #     )
-
-            return partial(
-                self.ctx.driver.render_message,
-                content=MViewItem(
-                    title="✅ Прогноз готов!",
-                    text=summary,
-                    option=options
-                ),
-                update=update
-            )
+            with open(plot_path, 'rb') as photo:
+                photo_data = photo.read()
+                return partial(
+                    self.ctx.driver.render_message,
+                    content=MViewItem(
+                        title="📈 Прогноз для {ticker}\nЛучшая модель: {best_model.get_name()}",
+                        text=summary,
+                        option=options
+                    ),
+                    image_url=photo_data
+                )
 
         except ValueError as e:
             return partial(self.show_error, f"Ошибка ввода: {str(e)}")
@@ -228,13 +223,4 @@ class StockController(BaseController):
             title="ℹ️ Помощь",
             text=help_text,
             options=[MViewOption(title="Начать анализ", link="/forecast")]
-        )
-
-    async def show_error(self, update, error_message: str):
-        """Показать сообщение об ошибке"""
-        return await self.show_message(
-            update=update,
-            title="❌ Ошибка",
-            text=error_message,
-            options=[MViewOption(title="Назад", link="/")]
         )
